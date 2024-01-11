@@ -3,13 +3,6 @@
 
 #include <iostream>
 
-
-// Double buffer
-// so when the computer is generating the image, it's filling from left to right, but it takes time. 
-// it's not instantly rendered so the first buffer loads and when the first is finished loading, it loads 
-// everything into the double buffer to show instantanously 
-// second buffer is not shown until first is complete
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
@@ -32,8 +25,6 @@ int main()
 
     // glfw window creation
     // --------------------
-    // second argument is to name the window
-    //
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
     if (window == NULL)
     {
@@ -42,8 +33,6 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
-    
-    // call function every time the window is resized
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // glad: load all OpenGL function pointers
@@ -62,11 +51,10 @@ int main()
         // -----
         processInput(window);
 
-	// should have the rendering commands right here
-	
-	// glClearColor(0.5f, 0.3f, 0.3f, 1.0f);
-	glClearColor(0.5f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+        // render
+        // ------
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
@@ -85,23 +73,30 @@ int main()
 void processInput(GLFWwindow *window)
 {
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-	// after the escape button is clicked, the window will close
         glfwSetWindowShouldClose(window, true);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
-
-// Function deals with resizing the window and matching up GLFW window with what
-// the computer is drawing 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
-    //
-    // What does this function do?
-    // arg 1 and arg2 sets the lower left corner
-    // arg3 and arg4 sets the widht and height of the rendering window in pixels 
-    // the drawing of the computer matches with the actual size of the glfw window
     glViewport(0, 0, width, height);
 }
+
+
+
+
+
+
+// ------------------------------------------------------------------------------
+// trying triangle
+
+// Vertex Input
+// You set the z coordinates to 0.0 coordinates
+float vertices [] = {
+	-0.5f, -0.5f, 0.0f,
+	0.5f, -0.5f, 0.0f,
+	0.0f, 0.5f, 0.0f
+};
